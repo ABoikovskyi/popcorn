@@ -1,0 +1,6 @@
+﻿@model PopCorn.DataLayer.Models.Project
+@{
+    ViewData["Title"] = "Проект";
+    ViewBag.FormLink = Url.Action("Edit", "Project");
+}
+@Html.Partial("EditForm", Model)

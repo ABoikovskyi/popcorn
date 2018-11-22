@@ -1,0 +1,47 @@
+﻿@using PopCorn.DataLayer.Enums
+@using PopCorn.DataLayer.Models.DTO
+@using PopCorn.DataLayer.Models.Interfaces
+@model PopCorn.DataLayer.Models.Interfaces.IEntity
+@{
+    var typeStructure = (List<ExtendedPropertyInfo>)ViewBag.TypeStructure;
+    var formLink = (string)ViewBag.FormLink;
+}
+
+<form id="data-form" method="post" action="@formLink">
+    @Html.HiddenFor(m => m.Id)
+    @foreach (var data in typeStructure)
+    {
+        <div class="data-field">
+            <label for="@data.Property.Name" class="data-label">@(data.InputViewAttribute.Name)</label>
+
+            @if (data.InputViewAttribute.Type == InputFieldType.Text)
+            {
+                <input name="@data.Property.Name" value="@data.Property.GetValue(Model, null)" type="text" class="data-input"/>
+            }
+            else if (data.InputViewAttribute.Type == InputFieldType.TextArea)
+            {
+                <textarea name="@data.Property.Name" class="data-input">@data.Property.GetValue(Model, null)</textarea>
+            }
+            else if (data.InputViewAttribute.Type == InputFieldType.Numeric)
+            {
+                <input name="@data.Property.Name" value="@data.Property.GetValue(Model, null)" type="number" step="0.1" class="data-input"/>
+            }
+            else if (data.InputViewAttribute.Type == InputFieldType.Calendar)
+            {
+                <input name="@data.Property.Name" value="@(((DateTime?)data.Property.GetValue(Model, null))?.ToString("yyyy-MM-dd"))" type="date" class="data-input"/>
+            }
+            else if (data.InputViewAttribute.Type == InputFieldType.Select)
+            {
+                var selectedValue = (IEntity)data.Property.GetValue(Model, null);
+                <select name="@($"{data.Property.Name}Id")" class="data-input">
+                    @foreach (var value in data.SelectValues)
+                    {
+                        <option value="@(value.Key == -1 ? (int?)null : value.Key)" selected="@((selectedValue != null ? selectedValue.Id : -1) == value.Key)">@value.Value</option>
+                    }
+                </select>
+            }
+        </div>
+        <div class="clear"></div>
+    }
+    <input type="submit" class="save-data" value="Сохранить" />
+</form>

@@ -1,0 +1,39 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.clear {
+    clear: both;
+}
+
+#main-wrapper, #data-form {
+    margin: 20px 0;
+}
+
+.create-button {
+    margin-bottom: 10px;
+}
+
+.data-field {
+    margin: 5px 0;
+}
+
+.data-label {
+    width: 300px;
+}
+
+.data-input {
+    width: 200px;
+    resize: none;
+}
+
+textarea.data-input {
+    width: 400px;
+    height: 100px;
+}

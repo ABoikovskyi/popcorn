@@ -1,0 +1,6 @@
+﻿@model PopCorn.DataLayer.Models.FinanceCategory
+@{
+    ViewData["Title"] = "Категория финансовой операции";
+    ViewBag.FormLink = Url.Action("EditCategory", "Home");
+}
+@Html.Partial("EditForm", Model)

@@ -1,0 +1,32 @@
+﻿@using PopCorn.DataLayer.Models.DTO
+@model List<PopCorn.DataLayer.Models.Interfaces.IEntity>
+@{
+    var typeStructure = (List<ExtendedPropertyInfo>)ViewBag.TypeStructure;
+    var formLink = (string)ViewBag.FormLink;
+}
+
+<form action="@formLink" class="create-button">
+    <input type="submit" value="Создать" />
+</form>
+
+<table class="data-table table table-striped table-bordered" style="width:100%">
+    <thead>
+    <tr>
+        @foreach (var structureData in typeStructure)
+        {
+            <th>@structureData.TableViewAttribute.Name</th>}
+        <th>Управление</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var modelData in Model)
+    {
+        <tr>
+            @foreach (var structureData in typeStructure)
+            {
+                <td>@structureData.Property.GetValue(modelData, null)</td>
+            }
+            <td><a href="@($"{formLink}?id={modelData.Id}")">Редактировать</a></td>
+        </tr>}
+    </tbody>
+</table>

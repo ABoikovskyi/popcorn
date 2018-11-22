@@ -1,0 +1,11 @@
+﻿@using PopCorn.DataLayer.Models;
+@using PopCorn.DataLayer.Models.Interfaces
+@{
+    ViewData["Title"] = "Проекты";
+    ViewBag.FormLink = Url.Action("Edit", "Project");
+}
+@model List<Project>
+
+<div id="main-wrapper">
+    @Html.Partial("DataTable", Model.Select(d=>(IEntity)d).ToList())
+</div>

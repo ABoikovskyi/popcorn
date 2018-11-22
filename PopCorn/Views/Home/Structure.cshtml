@@ -1,0 +1,35 @@
+﻿@using PopCorn.DataLayer.Models
+@using PopCorn.DataLayer.Models.DTO
+@using PopCorn.DataLayer.Models.Interfaces
+@model List<FinanceCategory>
+
+@{
+    ViewBag.Title = "Доп. данные";
+    var projectStatusStructure = (List<ExtendedPropertyInfo>)ViewBag.ProjectStatusStructure;
+    var financeTypeStructure = (List<ExtendedPropertyInfo>)ViewBag.FinanceTypeStructure;
+    var financeCategoryStructure = (List<ExtendedPropertyInfo>)ViewBag.FinanceCategoryStructure;
+    var projectStatuses = (List<ProjectStatus>)ViewBag.ProjectStatuses;
+    var financeTypes = (List<FinanceType>)ViewBag.FinanceTypes;
+    var financeCategories = (List<FinanceCategory>)ViewBag.FinanceCategories;
+}
+
+<div id="main-wrapper" class="additional-data">
+    <h4>Статусы проекта</h4>
+    @{
+        ViewBag.TypeStructure = projectStatusStructure;
+        ViewBag.FormLink = Url.Action("EditStatus", "Home");
+    }
+    @Html.Partial("DataTable", projectStatuses.Select(d => (IEntity)d).ToList())
+    <h4>Типы финансовых операций</h4>
+    @{
+        ViewBag.TypeStructure = financeTypeStructure;
+        ViewBag.FormLink = Url.Action("EditType", "Home");
+    }
+    @Html.Partial("DataTable", financeTypes.Select(d => (IEntity)d).ToList())
+    <h4>Категории финансовых категорий</h4>
+    @{
+        ViewBag.TypeStructure = financeCategoryStructure;
+        ViewBag.FormLink = Url.Action("EditCategory", "Home");
+    }
+    @Html.Partial("DataTable", financeCategories.Select(d => (IEntity)d).ToList())
+</div>
