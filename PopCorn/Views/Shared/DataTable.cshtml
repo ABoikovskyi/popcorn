@@ -1,12 +1,20 @@
 ﻿@using PopCorn.DataLayer.Models.DTO
 @model List<PopCorn.DataLayer.Models.Interfaces.IEntity>
 @{
-    var typeStructure = (List<ExtendedPropertyInfo>)ViewBag.TypeStructure;
-    var formLink = (string)ViewBag.FormLink;
+    var typeStructure = (List<ExtendedPropertyInfo>)ViewBag.TableTypeStructure;
+    var editLink = (string)ViewBag.EditLink;
+    var linkParams = (Dictionary<string, int>)ViewBag.LinkParams;
 }
 
-<form action="@formLink" class="create-button">
-    <input type="submit" value="Создать" />
+<form action="@editLink" class="create-button">
+    @if (linkParams != null)
+    {
+        foreach (var param in linkParams)
+        {
+            <input type="hidden" name="@param.Key" value="@param.Value" />
+        }
+    }
+    <input type="submit" value="Создать"/>
 </form>
 
 <table class="data-table table table-striped table-bordered" style="width:100%">
@@ -26,7 +34,16 @@
             {
                 <td>@structureData.Property.GetValue(modelData, null)</td>
             }
-            <td><a href="@($"{formLink}?id={modelData.Id}")">Редактировать</a></td>
-        </tr>}
+
+            @{
+                var actualEditLink = $"{editLink}?id={modelData.Id}";
+                if (linkParams != null)
+                {
+                    actualEditLink += string.Join("", linkParams.Select(p => $"&{p.Key}={p.Value}"));
+                }
+            }
+            <td><a href="@(actualEditLink)">Редактировать</a></td>
+        </tr>
+    }
     </tbody>
 </table>

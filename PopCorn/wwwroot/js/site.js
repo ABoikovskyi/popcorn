@@ -14,4 +14,11 @@
             ]
         });
     });
+
+    $(document).on("click", "[type='checkbox']", function(e) {
+        if (this.checked) {
+            $(this).attr("value", "true");
+        } else {
+            $(this).attr("value","false");}
+    });
 });

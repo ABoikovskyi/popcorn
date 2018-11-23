@@ -18,22 +18,26 @@ namespace PopCorn.Controllers
 
 		public IActionResult Index()
 		{
-			ViewBag.TypeStructure = _typeService.GetTypeStructure(typeof(ProjectFinance), typeof(TableView));
+			ViewBag.TableTypeStructure = _typeService.GetTypeStructure(typeof(ProjectFinance), typeof(TableView));
 			return View(_financeService.GetFinances());
 		}
 
-		public IActionResult Edit(int? id)
+		public IActionResult Edit(int? id, int? projectId)
 		{
-			ViewBag.TypeStructure = _typeService.GetTypeStructure(typeof(ProjectFinance), typeof(InputView));
-			ViewBag.Finance = _financeService.GetFinances(id);
-			return View(id.HasValue ? _financeService.GetFinanceOperation(id.Value) : new ProjectFinance());
+			ViewBag.FormTypeStructure = _typeService.GetTypeStructure(typeof(ProjectFinance), typeof(InputView));
+			ViewBag.FromProject = projectId.HasValue;
+			return View(id.HasValue
+				? _financeService.GetFinanceOperation(id.Value)
+				: new ProjectFinance {Project = new Project {Id = projectId ?? -1}});
 		}
 
 		[HttpPost]
 		public IActionResult Edit(ProjectFinance projectFinance)
 		{
 			_financeService.Edit(projectFinance);
-			return RedirectToAction("Index");
+			return projectFinance.FromProject
+				? RedirectToAction("Edit", "Project", new {id = projectFinance.ProjectId })
+				: RedirectToAction("Index");
 		}
 	}
 }

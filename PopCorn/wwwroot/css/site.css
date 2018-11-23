@@ -26,10 +26,15 @@
 
 .data-label {
     width: 300px;
+    float: left;
 }
 
 .data-input {
     width: 200px;
+    resize: none;
+}
+
+.data-checkbox {
     resize: none;
 }
 

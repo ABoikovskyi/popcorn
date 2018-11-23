@@ -27,7 +27,7 @@ namespace PopCorn.DataLayer.Models
 		[TableView(Name = "Тип")]
 		[NotMapped]
 		public string FinanceTypeStr => FinanceType?.Name;
-			
+
 		public int? FinanceCategoryId { get; set; }
 
 		[InputView(Name = "Категория", Type = InputFieldType.Select)]
@@ -39,7 +39,7 @@ namespace PopCorn.DataLayer.Models
 		public string FinanceCategoryStr =>
 			$"{(FinanceCategory?.ParentCategory == null ? "" : $"{FinanceCategory?.ParentCategory?.Name}->")}{FinanceCategory?.Name}";
 
-		public int ProjectId { get; set; }
+		public int? ProjectId { get; set; }
 
 		[InputView(Name = "Проект", Type = InputFieldType.Select)]
 		[ForeignKey("ProjectId")]
@@ -54,11 +54,14 @@ namespace PopCorn.DataLayer.Models
 		public DateTime OperationDate { get; set; }
 
 		[TableView(Name = "Сумма")]
-		[InputView(Name = "Сумма",Type = InputFieldType.Numeric)]
+		[InputView(Name = "Сумма", Type = InputFieldType.Numeric)]
 		public double Amount { get; set; }
 
 		[TableView(Name = "Заметки")]
 		[InputView(Name = "Заметки", Type = InputFieldType.TextArea)]
 		public string Note { get; set; }
+
+		[NotMapped]
+		public bool FromProject { get; set; }
 	}
 }

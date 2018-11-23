@@ -1,14 +1,16 @@
 ﻿@using PopCorn.DataLayer.Enums
 @using PopCorn.DataLayer.Models.DTO
 @using PopCorn.DataLayer.Models.Interfaces
-@model PopCorn.DataLayer.Models.Interfaces.IEntity
+@model IEntity
 @{
-    var typeStructure = (List<ExtendedPropertyInfo>)ViewBag.TypeStructure;
+    var typeStructure = (List<ExtendedPropertyInfo>)ViewBag.FormTypeStructure;
     var formLink = (string)ViewBag.FormLink;
+    var fromProject = (bool?)ViewContext.ViewBag.FromProject;
 }
 
 <form id="data-form" method="post" action="@formLink">
     @Html.HiddenFor(m => m.Id)
+    <input type="hidden" name="fromProject" value="@(fromProject.HasValue && fromProject.Value ? "true" : "false")"/>
     @foreach (var data in typeStructure)
     {
         <div class="data-field">
@@ -39,6 +41,10 @@
                         <option value="@(value.Key == -1 ? (int?)null : value.Key)" selected="@((selectedValue != null ? selectedValue.Id : -1) == value.Key)">@value.Value</option>
                     }
                 </select>
+            }
+            else if (data.InputViewAttribute.Type == InputFieldType.CheckBox)
+            {
+                <input name="@data.Property.Name" value="@((bool)data.Property.GetValue(Model, null) ? "true" : "false")" type="checkbox" class="data-checkbox"/>
             }
         </div>
         <div class="clear"></div>

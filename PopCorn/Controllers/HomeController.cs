@@ -33,7 +33,7 @@ namespace PopCorn.Controllers
 
 		public IActionResult EditStatus(int? id)
 		{
-			ViewBag.TypeStructure = _typeService.GetTypeStructure(typeof(ProjectStatus), typeof(InputView));
+			ViewBag.FormTypeStructure = _typeService.GetTypeStructure(typeof(ProjectStatus), typeof(InputView));
 			return View(id.HasValue ? _projectService.GetStatus(id.Value) : new ProjectStatus());
 		}
 
@@ -46,7 +46,7 @@ namespace PopCorn.Controllers
 
 		public IActionResult EditType(int? id)
 		{
-			ViewBag.TypeStructure = _typeService.GetTypeStructure(typeof(FinanceType), typeof(InputView));
+			ViewBag.FormTypeStructure = _typeService.GetTypeStructure(typeof(FinanceType), typeof(InputView));
 			return View(id.HasValue ? _financeService.GetFinanceType(id.Value) : new FinanceType());
 		}
 
@@ -59,7 +59,7 @@ namespace PopCorn.Controllers
 
 		public IActionResult EditCategory(int? id)
 		{
-			ViewBag.TypeStructure = _typeService.GetTypeStructure(typeof(FinanceCategory), typeof(InputView));
+			ViewBag.FormTypeStructure = _typeService.GetTypeStructure(typeof(FinanceCategory), typeof(InputView));
 			return View(id.HasValue ? _financeService.GetFinanceCategory(id.Value) : new FinanceCategory());
 		}
 

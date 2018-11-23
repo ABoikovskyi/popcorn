@@ -20,14 +20,15 @@ namespace PopCorn.Controllers
 
 		public IActionResult Index()
 		{
-			ViewBag.TypeStructure = _typeService.GetTypeStructure(typeof(Project), typeof(TableView));
+			ViewBag.TableTypeStructure = _typeService.GetTypeStructure(typeof(Project), typeof(TableView));
 			return View(_projectService.GetProjects());
 		}
 
 		public IActionResult Edit(int? id)
 		{
-			ViewBag.TypeStructure = _typeService.GetTypeStructure(typeof(Project), typeof(InputView));
-			ViewBag.Finance = _financeService.GetFinances(id);
+			ViewBag.FormTypeStructure = _typeService.GetTypeStructure(typeof(Project), typeof(InputView));
+			ViewBag.TableTypeStructure = _typeService.GetTypeStructure(typeof(ProjectFinance), typeof(TableView));
+			ViewBag.ProjectFinances = _financeService.GetFinances(id);
 			return View(id.HasValue ? _projectService.GetProject(id.Value) : new Project());
 		}
 

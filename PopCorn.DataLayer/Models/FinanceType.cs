@@ -15,7 +15,7 @@ namespace PopCorn.DataLayer.Models
 		[InputView(Name = "Название")]
 		public string Name { get; set; }
 		
-		[InputView(Name = "Доход")]
+		[InputView(Name = "Доход", Type = InputFieldType.CheckBox)]
 		public bool Income { get; set; }
 
 		[TableView(Name = "Доход")]

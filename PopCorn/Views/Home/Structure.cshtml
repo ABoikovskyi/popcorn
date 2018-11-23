@@ -16,20 +16,20 @@
 <div id="main-wrapper" class="additional-data">
     <h4>Статусы проекта</h4>
     @{
-        ViewBag.TypeStructure = projectStatusStructure;
-        ViewBag.FormLink = Url.Action("EditStatus", "Home");
+        ViewBag.TableTypeStructure = projectStatusStructure;
+        ViewBag.EditLink = Url.Action("EditStatus", "Home");
     }
     @Html.Partial("DataTable", projectStatuses.Select(d => (IEntity)d).ToList())
     <h4>Типы финансовых операций</h4>
     @{
-        ViewBag.TypeStructure = financeTypeStructure;
-        ViewBag.FormLink = Url.Action("EditType", "Home");
+        ViewBag.TableTypeStructure = financeTypeStructure;
+        ViewBag.EditLink = Url.Action("EditType", "Home");
     }
     @Html.Partial("DataTable", financeTypes.Select(d => (IEntity)d).ToList())
     <h4>Категории финансовых категорий</h4>
     @{
-        ViewBag.TypeStructure = financeCategoryStructure;
-        ViewBag.FormLink = Url.Action("EditCategory", "Home");
+        ViewBag.TableTypeStructure = financeCategoryStructure;
+        ViewBag.EditLink = Url.Action("EditCategory", "Home");
     }
     @Html.Partial("DataTable", financeCategories.Select(d => (IEntity)d).ToList())
 </div>
