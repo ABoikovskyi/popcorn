@@ -20,6 +20,10 @@
     margin-bottom: 10px;
 }
 
+.table-bordered>tfoot > tr > td.footer {
+    border-top: 1px solid #000;
+}
+
 .data-field {
     margin: 5px 0;
 }
@@ -41,4 +45,8 @@
 textarea.data-input {
     width: 400px;
     height: 100px;
+}
+
+thead input {
+    width: 100%;
 }

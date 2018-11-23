@@ -1,9 +1,12 @@
-﻿@using PopCorn.DataLayer.Models.DTO
+﻿@using PopCorn.DataLayer.Models
+@using PopCorn.DataLayer.Models.DTO
 @model List<PopCorn.DataLayer.Models.Interfaces.IEntity>
 @{
     var typeStructure = (List<ExtendedPropertyInfo>)ViewBag.TableTypeStructure;
     var editLink = (string)ViewBag.EditLink;
     var linkParams = (Dictionary<string, int>)ViewBag.LinkParams;
+    var isFinanceTable = Model.Count > 0 && Model[0] is ProjectFinance;
+    var amountPropertyName = "Amount";
 }
 
 <form action="@editLink" class="create-button">
@@ -22,7 +25,8 @@
     <tr>
         @foreach (var structureData in typeStructure)
         {
-            <th>@structureData.TableViewAttribute.Name</th>}
+            <th>@structureData.TableViewAttribute.Name</th>
+        }
         <th>Управление</th>
     </tr>
     </thead>
@@ -32,7 +36,7 @@
         <tr>
             @foreach (var structureData in typeStructure)
             {
-                <td>@structureData.Property.GetValue(modelData, null)</td>
+                <td @(structureData.Property.Name == amountPropertyName ? "class=amountColum" : "")>@structureData.Property.GetValue(modelData, null)</td>
             }
 
             @{
@@ -46,4 +50,30 @@
         </tr>
     }
     </tbody>
+    @{
+        if (isFinanceTable)
+        {
+            <tfoot>
+            <tr>
+                @foreach (var structureData in typeStructure)
+                {
+                    if (structureData.Property.Name == amountPropertyName)
+                    {
+                        var summ = Model.Select(m =>
+                        {
+                            var finance = (ProjectFinance)m;
+                            return finance.FinanceType.Income ? finance.Amount : -finance.Amount;
+                        }).Sum();
+                        <td class="footer">@summ</td>
+                    }
+                    else
+                    {
+                        <td class="footer"></td>
+                    }
+                }
+                <td class="footer"></td>
+            </tr>
+            </tfoot>
+        }
+    }
 </table>

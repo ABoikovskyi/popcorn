@@ -1,17 +1,30 @@
-﻿$(function() {
+﻿$(function () {
     $(".data-table").each(function () {
         var noNeedExportButton = $(this).parent().hasClass('additional-data');
-        $(this).DataTable({
+        var table = $(this).DataTable({
             colReorder: true,
+            orderCellsTop: true,
             fixedHeader: true,
             dom: noNeedExportButton ? '' :'Bfrtip',
             buttons: noNeedExportButton ? [] : [
                 'copyHtml5',
                 'excelHtml5'
-            ],
-            "columnDefs": [
-                { "orderable": false, "targets": $('th', this).length - 1 }
             ]
+        });
+    
+        $('thead tr', this).clone(true).appendTo('thead', this);
+        $('thead tr:eq(1) th', this).each(function (i) {
+            var title = $(this).text();
+            $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+
+            $('input', this).on('keyup change', function () {
+                if (table.column(i).search() !== this.value) {
+                    table
+                        .column(i)
+                        .search(this.value)
+                        .draw();
+                }
+            });
         });
     });
 
