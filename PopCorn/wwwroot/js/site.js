@@ -6,8 +6,8 @@
             var title = $(this).text();
             $(this).html('<input type="text" placeholder="Search ' + title + '" />');
 
-            $('input', this).on('keyup change', function () {
-                if (table.column(i).search() !== this.value) {
+            $('input', this).on('keyup', function (e) {
+                if (e.keyCode == 13 && table.column(i).search() !== this.value) {
                     table
                         .column(i)
                         .search(this.value)
