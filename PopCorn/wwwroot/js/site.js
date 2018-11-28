@@ -1,17 +1,5 @@
 ﻿$(function () {
     $(".data-table").each(function () {
-        var noNeedExportButton = $(this).parent().hasClass('additional-data');
-        var table = $(this).DataTable({
-            colReorder: true,
-            orderCellsTop: true,
-            fixedHeader: true,
-            dom: noNeedExportButton ? '' :'Bfrtip',
-            buttons: noNeedExportButton ? [] : [
-                'copyHtml5',
-                'excelHtml5'
-            ]
-        });
-    
         $('thead tr', this).clone(true).appendTo('thead', this);
         $('thead tr:eq(1) th', this).each(function (i) {
             var title = $(this).text();
@@ -25,6 +13,18 @@
                         .draw();
                 }
             });
+        });
+
+        var noNeedExportButton = $(this).parent().hasClass('additional-data');
+        var table = $(this).DataTable({
+            colReorder: true,
+            orderCellsTop: true,
+            fixedHeader: true,
+            dom: noNeedExportButton ? '' :'Bfrtip',
+            buttons: noNeedExportButton ? [] : [
+                'copyHtml5',
+                'excelHtml5'
+            ]
         });
     });
 
