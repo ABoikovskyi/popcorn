@@ -7,5 +7,6 @@
 @model List<ProjectFinance>
 
 <div id="main-wrapper">
+    <h4>Финансы</h4>
     @Html.Partial("DataTable", Model.Select(d => (IEntity)d).ToList())
 </div>
