@@ -1,6 +1,7 @@
 ﻿$(function () {
     $(".data-table").each(function () {
-        $('thead tr', this).clone(true).appendTo('thead', this);
+        //$('thead tr', this).clone(true).appendTo('thead', this);
+        $('thead', this).append($('thead tr', this).clone(true));
         $('thead tr:eq(1) th', this).each(function (i) {
             var title = $(this).text();
             $(this).html('<input type="text" placeholder="Search ' + title + '" />');

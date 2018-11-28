@@ -37,33 +37,48 @@ namespace PopCorn.BusinessLayer.Services
 				var isTableAttr = attributes[0] is TableView;
 				var isInputAttr = attributes[0] is InputView;
 
-				Dictionary<int, string> selectValues = null;
+                List<SelectValue> selectValues = null;
 				InputView inputAttribues = null;
 				if (isInputAttr)
 				{
 					inputAttribues = (InputView)attributes[0];
 					if (inputAttribues.Type == InputFieldType.Select)
 					{
-						selectValues = new Dictionary<int, string>();
+						selectValues = new List<SelectValue>();
 						if (property.PropertyType.IsEnum)
 						{
 							foreach (var value in Enum.GetValues(property.PropertyType))
 							{
-								selectValues.Add((int)Convert.ChangeType(value, property.PropertyType),
-									value.GetDisplayName());
+                                selectValues.Add(new SelectValue
+                                {
+                                    Key = (int)Convert.ChangeType(value, property.PropertyType),
+                                    Value = value.GetDisplayName()
+                                });
 							}
-						} else if (typeof(IDictionaryEntity).IsAssignableFrom(property.PropertyType))
+						} 
+                        else if (typeof(IDictionaryEntity).IsAssignableFrom(property.PropertyType))
 						{
 							var dbProperty = dbProperties
 								.First(p => p.PropertyType.IsGenericType &&
 								            p.PropertyType.GetGenericArguments()[0] == property.PropertyType);
-							selectValues.Add(-1, "");
-							var selectData = ((IEnumerable<dynamic>)dbProperty.GetValue(_context, null)).Where(d =>
+                            var isFinanceCategoryProp = property.PropertyType.Name == "FinanceCategory";
+                            selectValues.Add(new SelectValue
+                            {
+                                Key = -1,
+                                Value = ""
+                            });
+                            var dynamicData = (IEnumerable<dynamic>)dbProperty.GetValue(_context, null);
+                            var selectData = dynamicData.Where(d =>
 								type.Name != "FinanceCategory" || d.ParentCategoryId == null);
-							foreach (var dictionaryData in selectData)
+							foreach (var dictionaryData in selectData.Where(d => !isFinanceCategoryProp || d.ParentCategoryId != null))
 							{
-								selectValues.Add(dictionaryData.Id, dictionaryData.Name);
-							}
+                                selectValues.Add(new SelectValue
+                                {
+                                    Key = dictionaryData.Id,
+                                    Value = dictionaryData.Name,
+                                    GroupName = isFinanceCategoryProp ? dictionaryData.ParentCategoryStr : ""
+                                });
+                            }
 						}
 					}
 				}

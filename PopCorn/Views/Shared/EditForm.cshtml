@@ -36,9 +36,24 @@
             {
                 var selectedValue = (IEntity)data.Property.GetValue(Model, null);
                 <select name="@($"{data.Property.Name}Id")" class="data-input">
-                    @foreach (var value in data.SelectValues)
+                    @if (data.SelectValues.Any(v => !string.IsNullOrEmpty(v.GroupName)))
                     {
-                        <option value="@(value.Key == -1 ? (int?)null : value.Key)" selected="@((selectedValue != null ? selectedValue.Id : -1) == value.Key)">@value.Value</option>
+                        @foreach (var valueGroup in data.SelectValues.GroupBy(v => v.GroupName))
+                        {
+                    <optgroup label=@valueGroup.Key>
+                        @foreach (var value in valueGroup)
+                        {
+                            <option value="@(value.Key == -1 ? (int?)null : value.Key)" selected="@((selectedValue != null ? selectedValue.Id : -1) == value.Key)">@value.Value</option>
+                        }
+                    </optgroup>
+                        }
+                    }
+                    else
+                    {
+                        foreach (var value in data.SelectValues)
+                        {
+                            <option value="@(value.Key == -1 ? (int?)null : value.Key)" selected="@((selectedValue != null ? selectedValue.Id : -1) == value.Key)">@value.Value</option>
+                        }
                     }
                 </select>
             }

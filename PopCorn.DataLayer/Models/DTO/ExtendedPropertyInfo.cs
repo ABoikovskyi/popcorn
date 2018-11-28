@@ -9,6 +9,13 @@ namespace PopCorn.DataLayer.Models.DTO
 		public PropertyInfo Property { get; set; }
 		public TableView TableViewAttribute { get; set; }
 		public InputView InputViewAttribute { get; set; }
-		public Dictionary<int, string> SelectValues { get; set; }
+		public List<SelectValue> SelectValues { get; set; }
 	}
+
+    public class SelectValue
+    {
+        public int Key { get; set; }
+        public string Value { get; set; }
+        public string GroupName { get; set; }
+    }
 }

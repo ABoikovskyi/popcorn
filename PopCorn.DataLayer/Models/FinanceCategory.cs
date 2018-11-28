@@ -23,7 +23,7 @@ namespace PopCorn.DataLayer.Models
 
 		[TableView(Name = "Родительская категория")]
 		[NotMapped]
-		public string FinanceCategoryStr => ParentCategory == null ? "" : ParentCategory.Name;
+		public string ParentCategoryStr => ParentCategory == null ? "" : ParentCategory.Name;
 		
 		[InputView(Name = "Описание", Type = InputFieldType.TextArea)]
 		public string Description { get; set; }
