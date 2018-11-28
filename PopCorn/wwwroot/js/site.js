@@ -1,6 +1,6 @@
 ﻿$(function () {
-    $(".data-table").each(function () {
-        //$('thead tr', this).clone(true).appendTo('thead', this);
+    $('.data-table').each(function () {
+        var currentTable = this;
         $('thead', this).append($('thead tr', this).clone(true));
         $('thead tr:eq(1) th', this).each(function (i) {
             var title = $(this).text();
@@ -8,10 +8,18 @@
 
             $('input', this).on('keyup', function (e) {
                 if (e.keyCode == 13 && table.column(i).search() !== this.value) {
-                    table
-                        .column(i)
-                        .search(this.value)
-                        .draw();
+                    table.column(i).search(this.value).draw();
+                    var sumTd = $('td.formula-sum', currentTable);
+                    if(sumTd.length > 0) {
+                        var sum = 0;
+                        $('.amountColum').each(function() {
+                            var value = $(this).text();
+                            if(!isNaN(value) && value.length != 0) {
+                                sum += parseFloat(value);
+                            }
+                        });
+                        sumTd.html(sum);
+                    }
                 }
             });
         });

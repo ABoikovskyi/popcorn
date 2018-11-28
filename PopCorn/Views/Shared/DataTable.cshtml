@@ -34,12 +34,24 @@
     @foreach (var modelData in Model)
     {
         <tr>
-            @foreach (var structureData in typeStructure)
-            {
-                <td @(structureData.Property.Name == amountPropertyName ? "class=amountColum" : "")>@structureData.Property.GetValue(modelData, null)</td>
-            }
-
             @{
+                ProjectFinance finance = null;
+                if (isFinanceTable)
+                {
+                    finance = (ProjectFinance)modelData;
+                }
+                @foreach (var structureData in typeStructure)
+                {
+                    if (isFinanceTable && structureData.Property.Name == amountPropertyName)
+                    {
+                        <td class="amountColum">@(finance.FinanceType.Income ? "+" : "-")@structureData.Property.GetValue(modelData, null)</td>
+                    }
+                    else
+                    {
+                        <td>@structureData.Property.GetValue(modelData, null)</td>
+                    }
+                }
+
                 var actualEditLink = $"{editLink}?id={modelData.Id}";
                 if (linkParams != null)
                 {
@@ -59,12 +71,12 @@
                 {
                     if (structureData.Property.Name == amountPropertyName)
                     {
-                        var summ = Model.Select(m =>
+                        var sum = Model.Select(m =>
                         {
                             var finance = (ProjectFinance)m;
                             return finance.FinanceType.Income ? finance.Amount : -finance.Amount;
                         }).Sum();
-                        <td class="footer">@summ</td>
+                        <td class="footer formula-sum">@sum</td>
                     }
                     else
                     {
