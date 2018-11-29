@@ -40,7 +40,7 @@
                 {
                     finance = (ProjectFinance)modelData;
                 }
-                @foreach (var structureData in typeStructure)
+                foreach (var structureData in typeStructure)
                 {
                     if (isFinanceTable && structureData.Property.Name == amountPropertyName)
                     {
@@ -69,19 +69,7 @@
             <tr>
                 @foreach (var structureData in typeStructure)
                 {
-                    if (structureData.Property.Name == amountPropertyName)
-                    {
-                        var sum = Model.Select(m =>
-                        {
-                            var finance = (ProjectFinance)m;
-                            return finance.FinanceType.Income ? finance.Amount : -finance.Amount;
-                        }).Sum();
-                        <td class="footer formula-sum">@sum</td>
-                    }
-                    else
-                    {
-                        <td class="footer"></td>
-                    }
+                    <td class="footer @(structureData.Property.Name == amountPropertyName ? "formula-sum" : "")"></td>
                 }
                 <td class="footer"></td>
             </tr>

@@ -38,14 +38,14 @@
                 <select name="@($"{data.Property.Name}Id")" class="data-input">
                     @if (data.SelectValues.Any(v => !string.IsNullOrEmpty(v.GroupName)))
                     {
-                        @foreach (var valueGroup in data.SelectValues.GroupBy(v => v.GroupName))
+                        foreach (var valueGroup in data.SelectValues.GroupBy(v => v.GroupName))
                         {
-                    <optgroup label=@valueGroup.Key>
-                        @foreach (var value in valueGroup)
-                        {
-                            <option value="@(value.Key == -1 ? (int?)null : value.Key)" selected="@((selectedValue != null ? selectedValue.Id : -1) == value.Key)">@value.Value</option>
-                        }
-                    </optgroup>
+                            <optgroup label=@valueGroup.Key>
+                                @foreach (var value in valueGroup)
+                                {
+                                    <option value="@(value.Key == -1 ? (int?)null : value.Key)" selected="@((selectedValue != null ? selectedValue.Id : -1) == value.Key)">@value.Value</option>
+                                }
+                            </optgroup>
                         }
                     }
                     else
