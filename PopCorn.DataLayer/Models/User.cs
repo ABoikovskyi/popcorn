@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using PopCorn.DataLayer.Attributes;
+using PopCorn.DataLayer.Enums;
 using PopCorn.DataLayer.Models.Interfaces;
 
 namespace PopCorn.DataLayer.Models
@@ -18,7 +20,12 @@ namespace PopCorn.DataLayer.Models
 
 		public int RoleId { get; set; }
 
+		[InputView(Name = "Роль", Type = InputFieldType.Select)]
 		public virtual Role Role { get; set; }
+
+		[TableView(Name = "Роль")]
+		[NotMapped]
+		public string RoleStr => Role?.Name;
 
 		public virtual List<UserProject> Projects { get; set; }
 	}

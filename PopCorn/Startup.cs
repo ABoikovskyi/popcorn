@@ -34,6 +34,7 @@ namespace PopCorn
 				.AddCookie(options =>
 				{
 					options.LoginPath = new PathString("/Account/Login");
+					options.AccessDeniedPath = new PathString("/Project/Index");
 				});
 
 			services.Configure<CookiePolicyOptions>(options =>

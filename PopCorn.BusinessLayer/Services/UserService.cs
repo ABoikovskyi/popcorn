@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
+using Microsoft.EntityFrameworkCore;
 using PopCorn.DataLayer.Context;
 using PopCorn.DataLayer.Models;
 
@@ -17,22 +17,22 @@ namespace PopCorn.BusinessLayer.Services
 
 		public List<User> GetUsers()
 		{
-			return _context.Users.ToList();
+			return _context.Users.Include(u => u.Role).ToList();
 		}
 
 		public User GetUser(int id)
 		{
-			return _context.Users.FirstOrDefault(p => p.Id == id);
+			return _context.Users.Include(u => u.Role).FirstOrDefault(p => p.Id == id);
 		}
 
 		public User GetUser(string email)
 		{
-			return _context.Users.FirstOrDefault(u => u.Email == email);
+			return _context.Users.Include(u => u.Role).FirstOrDefault(u => u.Email == email);
 		}
 
 		public User GetUser(string email, string password)
 		{
-			return _context.Users.FirstOrDefault(u => u.Email == email && u.Password == password);
+			return _context.Users.Include(u => u.Role).FirstOrDefault(u => u.Email == email && u.Password == password);
 		}
 
 		public bool Edit(User user)

@@ -28,7 +28,9 @@
                         <li><a asp-area="" asp-controller="Project" asp-action="Index">Проекты</a></li>
                         <li><a asp-area="" asp-controller="Finance" asp-action="Index">Финансы</a></li>
                         <li><a asp-area="" asp-controller="Home" asp-action="Structure">Доп. данные</a></li>
-                        <li><a asp-area="" asp-controller="Account" asp-action="Users">Пользователи</a></li>
+                        @if((bool)ViewBag.IsAdmin) {
+                            <li><a asp-area="" asp-controller="Account" asp-action="Users">Пользователи</a></li>
+                        }
                     </ul>
                     <ul class="nav navbar-nav navbar-nav-right">
                         <li><a href="">@User.Identity.Name</a></li>

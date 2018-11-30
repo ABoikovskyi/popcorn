@@ -8,8 +8,8 @@ using PopCorn.Models;
 
 namespace PopCorn.Controllers
 {
-	//[Authorize]
-	public class HomeController : Controller
+	[Authorize]
+	public class HomeController : BaseController
 	{
 		private readonly ProjectService _projectService;
 		private readonly FinanceService _financeService;

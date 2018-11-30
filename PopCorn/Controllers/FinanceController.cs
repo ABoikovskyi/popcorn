@@ -6,8 +6,8 @@ using PopCorn.DataLayer.Models;
 
 namespace PopCorn.Controllers
 {
-	//[Authorize]
-	public class FinanceController : Controller
+	[Authorize]
+	public class FinanceController : BaseController
 	{
 		private readonly FinanceService _financeService;
 		private readonly TypeService _typeService;

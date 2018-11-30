@@ -12,7 +12,7 @@ using PopCorn.Models;
 
 namespace PopCorn.Controllers
 {
-	public class AccountController : Controller
+	public class AccountController : BaseController
 	{
 		private readonly UserService _userService;
 		private readonly TypeService _typeService;
@@ -38,7 +38,7 @@ namespace PopCorn.Controllers
 				var user = _userService.GetUser(model.Email, model.Password);
 				if (user != null)
 				{
-					await Authenticate(model.Email);
+					await Authenticate(user);
 
 					return RedirectToAction("Index", "Project");
 				}
@@ -49,11 +49,12 @@ namespace PopCorn.Controllers
 			return View(model);
 		}
 
-		private async Task Authenticate(string userName)
+		private async Task Authenticate(User user)
 		{
 			var claims = new List<Claim>
 			{
-				new Claim(ClaimsIdentity.DefaultNameClaimType, userName)
+				new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
+				new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role?.Name)
 			};
 
 			var id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType,
@@ -68,13 +69,14 @@ namespace PopCorn.Controllers
 			return RedirectToAction("Login", "Account");
 		}
 
-		[Authorize]
+		[Authorize(Roles = "admin")]
 		public IActionResult Users()
 		{
 			ViewBag.TableTypeStructure = _typeService.GetTypeStructure(typeof(User), typeof(TableView));
 			return View(_userService.GetUsers());
 		}
 
+		[Authorize(Roles = "admin")]
 		[Authorize]
 		public IActionResult EditUser(int? id)
 		{
