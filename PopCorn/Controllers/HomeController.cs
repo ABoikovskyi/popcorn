@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PopCorn.BusinessLayer.Services;
 using PopCorn.DataLayer.Attributes;
@@ -7,6 +8,7 @@ using PopCorn.Models;
 
 namespace PopCorn.Controllers
 {
+	//[Authorize]
 	public class HomeController : Controller
 	{
 		private readonly ProjectService _projectService;

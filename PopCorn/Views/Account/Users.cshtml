@@ -1,0 +1,12 @@
+﻿@using PopCorn.DataLayer.Models;
+@using PopCorn.DataLayer.Models.Interfaces
+@{
+    ViewData["Title"] = "Пользователи";
+    ViewBag.EditLink = Url.Action("EditUser", "Account");
+}
+@model List<User>
+
+<div id="main-wrapper">
+    <h4>Пользователи</h4>
+    @Html.Partial("DataTable", Model.Select(d=>(IEntity)d).ToList())
+</div>

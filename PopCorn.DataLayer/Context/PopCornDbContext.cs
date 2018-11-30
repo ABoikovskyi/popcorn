@@ -14,5 +14,8 @@ namespace PopCorn.DataLayer.Context
 		public virtual DbSet<FinanceCategory> FinanceCategories { get; set; }
         public virtual DbSet<FinanceType> FinanceTypes { get; set; }
         public virtual DbSet<ProjectFinance> ProjectFinances { get; set; }
-    }
+	    public virtual DbSet<User> Users { get; set; }
+	    public virtual DbSet<Role> Roles { get; set; }
+	    public virtual DbSet<UserProject> UserProjects { get; set; }
+	}
 }

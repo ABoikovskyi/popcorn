@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -27,6 +28,13 @@ namespace PopCorn
 			services.AddScoped<TypeService, TypeService>();
 			services.AddScoped<ProjectService, ProjectService>();
 			services.AddScoped<FinanceService, FinanceService>();
+			services.AddScoped<UserService, UserService>();
+
+			services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+				.AddCookie(options =>
+				{
+					options.LoginPath = new PathString("/Account/Login");
+				});
 
 			services.Configure<CookiePolicyOptions>(options =>
 			{
@@ -34,8 +42,7 @@ namespace PopCorn
 				options.CheckConsentNeeded = context => true;
 				options.MinimumSameSitePolicy = SameSiteMode.None;
 			});
-
-
+			
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 		}
 
@@ -55,6 +62,7 @@ namespace PopCorn
 			app.UseHttpsRedirection();
 			app.UseStaticFiles();
 			app.UseCookiePolicy();
+			app.UseAuthentication();
 
 			app.UseMvc(routes =>
 			{

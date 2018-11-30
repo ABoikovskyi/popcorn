@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PopCorn.DataLayer.Context;
 
 namespace PopCorn.DataLayer.Migrations
 {
     [DbContext(typeof(PopCornDbContext))]
-    partial class PopCornDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181130153500_Roles")]
+    partial class Roles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -138,7 +140,7 @@ namespace PopCorn.DataLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles");
+                    b.ToTable("Role");
                 });
 
             modelBuilder.Entity("PopCorn.DataLayer.Models.User", b =>
@@ -151,32 +153,13 @@ namespace PopCorn.DataLayer.Migrations
 
                     b.Property<string>("Password");
 
-                    b.Property<int>("RoleId");
+                    b.Property<int?>("RoleId");
 
                     b.HasKey("Id");
 
                     b.HasIndex("RoleId");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("PopCorn.DataLayer.Models.UserProject", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("NameId");
-
-                    b.Property<int>("ProjectId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NameId");
-
-                    b.HasIndex("ProjectId");
-
-                    b.ToTable("UserProjects");
                 });
 
             modelBuilder.Entity("PopCorn.DataLayer.Models.FinanceCategory", b =>
@@ -213,21 +196,7 @@ namespace PopCorn.DataLayer.Migrations
                 {
                     b.HasOne("PopCorn.DataLayer.Models.Role", "Role")
                         .WithMany("Users")
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("PopCorn.DataLayer.Models.UserProject", b =>
-                {
-                    b.HasOne("PopCorn.DataLayer.Models.User", "Name")
-                        .WithMany("Projects")
-                        .HasForeignKey("NameId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("PopCorn.DataLayer.Models.Project", "Project")
-                        .WithMany("Users")
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("RoleId");
                 });
 #pragma warning restore 612, 618
         }

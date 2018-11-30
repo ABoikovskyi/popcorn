@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PopCorn.BusinessLayer.Services;
 using PopCorn.DataLayer.Attributes;
 using PopCorn.DataLayer.Models;
 
 namespace PopCorn.Controllers
 {
+	//[Authorize]
 	public class ProjectController : Controller
 	{
 		private readonly ProjectService _projectService;

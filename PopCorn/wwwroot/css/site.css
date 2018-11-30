@@ -9,7 +9,6 @@
     }
 }
 
-
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
@@ -17,6 +16,10 @@
 
 .clear {
     clear: both;
+}
+
+.nav.navbar-nav.navbar-nav-right {
+    float: right;
 }
 
 #main-wrapper, #data-form {

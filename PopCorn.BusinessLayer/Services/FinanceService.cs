@@ -20,6 +20,7 @@ namespace PopCorn.BusinessLayer.Services
 			return _context.ProjectFinances
 				.Include(f => f.FinanceType)
 				.Include(f => f.FinanceCategory)
+				.Include(f => f.FinanceCategory.ParentCategory)
 				.Include(f => f.Project)
 				.Where(f => !projectId.HasValue || f.ProjectId == projectId).ToList();
 		}

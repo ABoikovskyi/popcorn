@@ -68,5 +68,7 @@ namespace PopCorn.DataLayer.Models
 		public double EstimatedPrice { get; set; }
 
 		public virtual List<ProjectFinance> Finance { get; set; }
+
+		public virtual List<UserProject> Users { get; set; }
 	}
 }

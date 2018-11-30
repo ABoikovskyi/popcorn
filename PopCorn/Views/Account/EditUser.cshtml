@@ -1,0 +1,8 @@
+﻿@using Microsoft.AspNetCore.Mvc.Rendering
+@using PopCorn.DataLayer.Models
+@model User
+@{
+    ViewData["Title"] = "Пользователь";
+    ViewBag.FormLink = Url.Action("EditUser", "Account");
+}
+@Html.Partial("EditForm", Model)

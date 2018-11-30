@@ -63,6 +63,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="Views\Account\EditUser.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Account\Users.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\Finance\Edit.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
