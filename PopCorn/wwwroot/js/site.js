@@ -4,7 +4,7 @@
         $('thead', this).append($('thead tr', this).clone(true));
         $('thead tr:eq(1) th', this).each(function(i) {
             var title = $(this).text();
-            $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+            $(this).html('<input type="text" placeholder="поиск" />');
 
             $('input', this).on('keyup',
                 function(e) {

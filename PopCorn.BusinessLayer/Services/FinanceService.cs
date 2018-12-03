@@ -69,6 +69,13 @@ namespace PopCorn.BusinessLayer.Services
 			_context.SaveChanges();
 		}
 
+		public void Delete(int id)
+		{
+			var finance = _context.ProjectFinances.First(p => p.Id == id);
+			_context.Remove(finance);
+			_context.SaveChanges();
+		}
+
 		public void EditCategory(FinanceCategory category)
 		{
 			if (category.Id == 0)

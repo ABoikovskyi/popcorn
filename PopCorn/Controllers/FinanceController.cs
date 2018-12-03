@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using PopCorn.BusinessLayer.Services;
 using PopCorn.DataLayer.Attributes;
 using PopCorn.DataLayer.Models;
+using System.Collections.Generic;
 
 namespace PopCorn.Controllers
 {
@@ -18,10 +19,16 @@ namespace PopCorn.Controllers
 			_typeService = typeService;
 		}
 
-		public IActionResult Index()
+		public IActionResult Index(int? projectId = null)
 		{
 			ViewBag.TableTypeStructure = _typeService.GetTypeStructure(typeof(ProjectFinance), typeof(TableView));
-			return View(_financeService.GetFinances());
+			if (projectId.HasValue)
+			{
+				ViewBag.ProjectId = projectId.Value;
+				ViewBag.LinkParams = new Dictionary<string, int> {{"projectId", projectId.Value}};
+			}
+
+			return View(_financeService.GetFinances(projectId));
 		}
 
 		public IActionResult Edit(int? id, int? projectId)
@@ -38,8 +45,14 @@ namespace PopCorn.Controllers
 		{
 			_financeService.Edit(projectFinance);
 			return projectFinance.FromProject
-				? RedirectToAction("Edit", "Project", new {id = projectFinance.ProjectId })
+				? RedirectToAction("Index", "Finance", new {projectId = projectFinance.ProjectId})
 				: RedirectToAction("Index");
+		}
+
+		public IActionResult Delete(int id, int? projectId)
+		{
+			_financeService.Delete(id);
+			return RedirectToAction("Index", "Finance", new {projectId});
 		}
 	}
 }

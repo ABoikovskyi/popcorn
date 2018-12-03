@@ -29,8 +29,6 @@ namespace PopCorn.Controllers
 		public IActionResult Edit(int? id)
 		{
 			ViewBag.FormTypeStructure = _typeService.GetTypeStructure(typeof(Project), typeof(InputView));
-			ViewBag.TableTypeStructure = _typeService.GetTypeStructure(typeof(ProjectFinance), typeof(TableView));
-			ViewBag.ProjectFinances = _financeService.GetFinances(id);
 			return View(id.HasValue ? _projectService.GetProject(id.Value) : new Project());
 		}
 

@@ -6,6 +6,7 @@
     var editLink = (string)ViewBag.EditLink;
     var linkParams = (Dictionary<string, int>)ViewBag.LinkParams;
     var isFinanceTable = Model.Count > 0 && Model[0] is ProjectFinance;
+    var isProjectTable = Model.Count > 0 && Model[0] is Project;
     var amountPropertyName = "Amount";
 }
 
@@ -58,7 +59,17 @@
                     actualEditLink += string.Join("", linkParams.Select(p => $"&{p.Key}={p.Value}"));
                 }
             }
-            <td><a href="@(actualEditLink)">Редактировать</a></td>
+            <td><a href="@(actualEditLink)">Редактировать</a>
+            @if (isProjectTable)
+            {
+                <br/><a href="@Url.Action("Index", "Finance", new { projectId = modelData.Id } )">Финансы</a>
+            }
+             else if (isFinanceTable)
+             {
+                 <br/>
+                 <a href="@Url.Action("Delete", "Finance", new {id = modelData.Id, projectId = (int?)ViewBag.ProjectId})">Удалить</a>
+             }
+            </td>
         </tr>
     }
     </tbody>

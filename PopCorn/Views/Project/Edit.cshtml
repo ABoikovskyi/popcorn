@@ -1,19 +1,7 @@
-﻿@using Microsoft.AspNetCore.Mvc.Rendering
-@using PopCorn.DataLayer.Models
-@using PopCorn.DataLayer.Models.Interfaces
+﻿@using PopCorn.DataLayer.Models
 @model Project
 @{
     ViewData["Title"] = "Проект";
     ViewBag.FormLink = Url.Action("Edit", "Project");
-    ViewBag.EditLink = Url.Action("Edit", "Finance");
-    ViewBag.LinkParams = new Dictionary<string, int> {{"projectId", Model.Id}};
-    var projectFinances = (List<ProjectFinance>)ViewBag.ProjectFinances;
 }
 @Html.Partial("EditForm", Model)
-
-@if (Model.Id > 0)
-{
-    <hr>
-    <hr>
-    @Html.Partial("DataTable", projectFinances.Select(d => (IEntity)d).ToList())
-}

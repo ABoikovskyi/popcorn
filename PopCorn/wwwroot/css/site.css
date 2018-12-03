@@ -60,3 +60,9 @@ textarea.data-input {
 thead input {
     width: 100%;
 }
+
+input::placeholder {
+    color: #AAAAAA;
+    font-weight: normal;
+    font-size: 11pt;
+}
