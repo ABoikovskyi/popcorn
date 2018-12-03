@@ -60,15 +60,15 @@
                 }
             }
             <td><a href="@(actualEditLink)">Редактировать</a>
-            @if (isProjectTable)
-            {
-                <br/><a href="@Url.Action("Index", "Finance", new { projectId = modelData.Id } )">Финансы</a>
-            }
-             else if (isFinanceTable)
-             {
-                 <br/>
-                 <a href="@Url.Action("Delete", "Finance", new {id = modelData.Id, projectId = (int?)ViewBag.ProjectId})">Удалить</a>
-             }
+                @if (isProjectTable)
+                {
+                    <br/><a href="@Url.Action("Index", "Finance", new { projectId = modelData.Id } )">Финансы</a>
+                }
+                else if (isFinanceTable)
+                {
+                    <br/>
+                    <a href="@Url.Action("Delete", "Finance", new {id = modelData.Id, projectId = (int?)ViewBag.ProjectId})">Удалить</a>
+                }
             </td>
         </tr>
     }
@@ -88,3 +88,4 @@
         }
     }
 </table>
+<div class="hint">* поиск нескольких значений через + (например: хит+просто)</div>

@@ -66,3 +66,11 @@ input::placeholder {
     font-weight: normal;
     font-size: 11pt;
 }
+
+.dataTables_filter {
+    display: none;
+}
+
+.hint {
+    color: red;
+}

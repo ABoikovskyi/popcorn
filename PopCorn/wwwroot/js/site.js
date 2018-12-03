@@ -7,9 +7,14 @@
             $(this).html('<input type="text" placeholder="поиск" />');
 
             $('input', this).on('keyup',
-                function(e) {
-                    if (e.keyCode == 13 && table.column(i).search() !== this.value) {
-                        table.column(i).search(this.value).draw();
+                function (e) {
+                    var inputValue = this.value;
+                    if (e.keyCode == 13 && table.column(i).search() !== inputValue) {
+                        var isRegex = inputValue.includes("+");
+                        if (isRegex) {
+                            inputValue = inputValue.replace("+", "|");
+                        }
+                        table.column(i).search(inputValue, isRegex, false).draw();
                         sumFunction(currentTable);
                     }
                 });
@@ -17,6 +22,7 @@
 
         var noNeedExportButton = $(this).parent().hasClass('additional-data');
         var table = $(this).DataTable({
+            paging: false,
             colReorder: true,
             orderCellsTop: true,
             fixedHeader: true,
