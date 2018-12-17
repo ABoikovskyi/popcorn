@@ -8,6 +8,7 @@ namespace PopCorn.Controllers
 	{
 		public override void OnActionExecuting(ActionExecutingContext filterContext)
 		{
+			ViewBag.UserData = User;
 			ViewBag.IsAdmin = User?.FindFirst(x => x.Type == ClaimsIdentity.DefaultRoleClaimType)?.Value == "admin";
 		}
 	}

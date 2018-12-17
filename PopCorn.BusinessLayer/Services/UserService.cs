@@ -17,22 +17,25 @@ namespace PopCorn.BusinessLayer.Services
 
 		public List<User> GetUsers()
 		{
-			return _context.Users.Include(u => u.Role).ToList();
+			return _context.Users.Include(u => u.Role).Include(u => u.Projects.Select(p => p.Project)).ToList();
 		}
 
 		public User GetUser(int id)
 		{
-			return _context.Users.Include(u => u.Role).FirstOrDefault(p => p.Id == id);
+			return _context.Users.Include(u => u.Role).Include(u => u.Projects.Select(p => p.Project))
+				.FirstOrDefault(p => p.Id == id);
 		}
 
 		public User GetUser(string email)
 		{
-			return _context.Users.Include(u => u.Role).FirstOrDefault(u => u.Email == email);
+			return _context.Users.Include(u => u.Role).Include(u => u.Projects.Select(p => p.Project))
+				.FirstOrDefault(u => u.Email == email);
 		}
 
 		public User GetUser(string email, string password)
 		{
-			return _context.Users.Include(u => u.Role).FirstOrDefault(u => u.Email == email && u.Password == password);
+			return _context.Users.Include(u => u.Role).Include(u => u.Projects.Select(p => p.Project))
+				.FirstOrDefault(u => u.Email == email && u.Password == password);
 		}
 
 		public bool Edit(User user)

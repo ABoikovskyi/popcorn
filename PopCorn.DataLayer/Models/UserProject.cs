@@ -6,9 +6,9 @@ namespace PopCorn.DataLayer.Models
 	{
 		public int Id { get; set; }
 
-		public int NameId { get; set; }
+		public int UserId { get; set; }
 
-		public virtual User Name { get; set; }
+		public virtual User User { get; set; }
 
 		public int ProjectId { get; set; }
 

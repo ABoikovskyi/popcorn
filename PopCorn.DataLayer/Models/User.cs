@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using PopCorn.DataLayer.Attributes;
 using PopCorn.DataLayer.Enums;
 using PopCorn.DataLayer.Models.Interfaces;
@@ -28,5 +30,11 @@ namespace PopCorn.DataLayer.Models
 		public string RoleStr => Role?.Name;
 
 		public virtual List<UserProject> Projects { get; set; }
+
+		[TableView(Name = "Проекты")]
+		public virtual string ProjectsStr => string.Join(Environment.NewLine, Projects?.Select(p => p.Project.Name));
+
+		[InputView(Name = "Проекты")]
+		public virtual int[] ProjectsIds => Projects?.Select(p => p.Id).ToArray();
 	}
 }
