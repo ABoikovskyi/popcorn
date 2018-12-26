@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using PopCorn.DataLayer.Attributes;
@@ -29,12 +28,24 @@ namespace PopCorn.DataLayer.Models
 		[NotMapped]
 		public string RoleStr => Role?.Name;
 
-		public virtual List<UserProject> Projects { get; set; }
+		public virtual List<UserProject> UserProjects { get; set; }
+
+		[InputView(Name = "Проекты", Type = InputFieldType.MultiSelect)]
+		[NotMapped]
+		public virtual List<Project> Projects { get; set; }
 
 		[TableView(Name = "Проекты")]
-		public virtual string ProjectsStr => string.Join(Environment.NewLine, Projects?.Select(p => p.Project.Name));
+		[NotMapped]
+		public virtual string ProjectsStr =>
+			UserProjects == null ? null : string.Join(", ", UserProjects.Select(p => p.Project?.Name));
 
-		[InputView(Name = "Проекты")]
-		public virtual int[] ProjectsIds => Projects?.Select(p => p.Id).ToArray();
+		[NotMapped] private int[] _projectsIds;
+
+		[NotMapped]
+		public virtual int[] ProjectsIds
+		{
+			get => _projectsIds ?? UserProjects?.Select(p => p.ProjectId).ToArray();
+			set => _projectsIds = value;
+		}
 	}
 }

@@ -42,10 +42,14 @@ namespace PopCorn.BusinessLayer.Services
 				if (isInputAttr)
 				{
 					inputAttribues = (InputView)attributes[0];
-					if (inputAttribues.Type == InputFieldType.Select)
+					if (inputAttribues.Type == InputFieldType.Select || inputAttribues.Type == InputFieldType.MultiSelect)
 					{
+						var propType = property.PropertyType;
+						var isEnumSelect = propType.IsEnum;
+						var isTypeSelect = typeof(IDictionaryEntity).IsAssignableFrom(propType);
+						var isTypeMultiSelect = propType.IsGenericType;
 						selectValues = new List<SelectValue>();
-						if (property.PropertyType.IsEnum)
+						if (isEnumSelect)
 						{
 							foreach (var value in Enum.GetValues(property.PropertyType))
 							{
@@ -56,11 +60,13 @@ namespace PopCorn.BusinessLayer.Services
 								});
 							}
 						}
-						else if (typeof(IDictionaryEntity).IsAssignableFrom(property.PropertyType))
+						else if (isTypeSelect || isTypeMultiSelect)
 						{
 							var dbProperty = dbProperties
 								.First(p => p.PropertyType.IsGenericType &&
-								            p.PropertyType.GetGenericArguments()[0] == property.PropertyType);
+								            p.PropertyType.GetGenericArguments()[0] == (isTypeMultiSelect
+									            ? propType.GetGenericArguments()[0]
+									            : propType));
 							var isFinanceCategoryProp = property.PropertyType.Name == "FinanceCategory";
 							selectValues.Add(new SelectValue
 							{

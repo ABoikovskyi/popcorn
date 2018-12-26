@@ -47,6 +47,8 @@
                 $(this).attr("value", "false");
             }
         });
+
+    $(".multiselect").chosen();
 });
 
 var sumFunction = function(table) {

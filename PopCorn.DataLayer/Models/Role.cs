@@ -3,7 +3,7 @@ using PopCorn.DataLayer.Models.Interfaces;
 
 namespace PopCorn.DataLayer.Models
 {
-	public class Role : IEntity
+	public class Role : IDictionaryEntity
 	{
 		public int Id { get; set; }
 

@@ -6,6 +6,7 @@
 		Numeric,
 		TextArea,
 		Select,
+		MultiSelect,
 		Calendar,
 		CheckBox
 	}
