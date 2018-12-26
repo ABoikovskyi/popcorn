@@ -65,8 +65,8 @@ namespace PopCorn.BusinessLayer.Services
 							var dbProperty = dbProperties
 								.First(p => p.PropertyType.IsGenericType &&
 								            p.PropertyType.GetGenericArguments()[0] == (isTypeMultiSelect
-									            ? propType.GetGenericArguments()[0]
-									            : propType));
+									            ? inputAttribues.MultiSelectType
+												: propType));
 							var isFinanceCategoryProp = property.PropertyType.Name == "FinanceCategory";
 							selectValues.Add(new SelectValue
 							{

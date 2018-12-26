@@ -35,7 +35,7 @@
                 }
                 else if (data.InputViewAttribute.Type == InputFieldType.Select || isMultiSelect)
                 {
-                    var idProperytyName = $"{data.Property.Name}{(isMultiSelect ? "Ids" : "Id")}";
+                    var idProperytyName = isMultiSelect ? $"{data.InputViewAttribute.MultiSelectType.Name}sIds" : $"{data.Property.Name}Id";
                     var selectedValues = isMultiSelect ? ((int[])Model.GetType().GetProperty(idProperytyName).GetValue(Model, null))?.Cast<int?>().ToArray()
                         : new[] {(int?)Model.GetType().GetProperty(idProperytyName).GetValue(Model, null) ?? (int?)-1};
                     <select name="@(isMultiSelect ? idProperytyName + "[]" : idProperytyName)" class="data-input select @(isMultiSelect ? "multiselect" : "")" @(isMultiSelect ? "multiple=\"\"" : "")>

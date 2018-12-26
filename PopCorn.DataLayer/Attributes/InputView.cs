@@ -12,5 +12,6 @@ namespace PopCorn.DataLayer.Attributes
 
 		public string Name { get; set; }
 		public InputFieldType Type { get; set; }
+		public Type MultiSelectType { get; set; }
 	}
 }

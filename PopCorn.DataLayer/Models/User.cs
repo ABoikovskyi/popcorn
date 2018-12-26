@@ -27,12 +27,9 @@ namespace PopCorn.DataLayer.Models
 		[TableView(Name = "Роль")]
 		[NotMapped]
 		public string RoleStr => Role?.Name;
-
+		
+		[InputView(Name = "Проекты", Type = InputFieldType.MultiSelect, MultiSelectType = typeof(Project))]
 		public virtual List<UserProject> UserProjects { get; set; }
-
-		[InputView(Name = "Проекты", Type = InputFieldType.MultiSelect)]
-		[NotMapped]
-		public virtual List<Project> Projects { get; set; }
 
 		[TableView(Name = "Проекты")]
 		[NotMapped]
